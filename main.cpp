@@ -1,11 +1,14 @@
-#include <bits/stdc++.h>
-#include <cstdio>
 #include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
 
-const int M = 1 + pow(2, 7);  // You can change this for your specific game!
-const int N = 1 + pow(2, 3);  // You can change this for your specific game!
+const int MIN_PLAYERS = 3;
+const int MAX_PLAYERS = 10;
+const int MAX_SIZE = MAX_PLAYERS + 1;
+const char SYMBOLS[MAX_PLAYERS] = {'X', 'O', '*', '#', '@', '+', '%', '&', '$', '!'};
 
-void initBoard(int board[M][N], int M, int N) {
+void initBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
   for (int m = 0; m < M; m++) {
     for (int n = 0; n < N; n++) {
       board[m][n] = 0;
@@ -13,7 +16,7 @@ void initBoard(int board[M][N], int M, int N) {
   }
 }
 
-int parseBoard(int board[M][N]) {
+int parseBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
   /*
    * Win condition: the first player to get 3 in a row, column or diagonal wins.
    * If player p in [1,...,P] has won, then you should return p; otherwise 0.
@@ -40,45 +43,16 @@ int parseBoard(int board[M][N]) {
   return 0;
 }
 
-void gameLoop(int board[M][N], bool cont, int players, int M, int N) {
-  int winner;
-  int m, n;
-  do {
-    for (int p = 1; p <= players; ++p) {
-      std::cout << "Player " << p << " place:";
-      std::cin >> m >> n;
-      if (board[m][n] == 0) {
-        std::cout << p << " at (" << m << ", " << n << ")." << std::endl;
-        board[m][n] = p;
-      } else {
-        std::cout << "Illegal move!" << std::endl;
-      }
+bool isBoardFull(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
+  for (int m = 0; m < M; m++) {
+    for (int n = 0; n < N; n++) {
+      if (board[m][n] == 0) return false;
     }
-    winner = parseBoard(board);
-    if (winner != 0) {
-      std::cout << "Player " << winner << " has won!" << std::endl;
-      cont = false;
-    }
-  } while (cont);
-}
-
-int main(int argc, char *argv[]) {
-  int P;
-  bool cont = true;
-  if (argc < 1) {
-    return EXIT_FAILURE;
-  } else {
-    std::cout << "Initialising game... How many players?";
-    std::cin >> P;
   }
-  int board[M][N];
-  initBoard(board, M, N);
-  printBoard(board, M, N);
-  gameLoop(board, cont, P, M, N);
-  return EXIT_SUCCESS;
+  return true;
 }
 
-void printBoard(int board[M][N], int M, int N) {
+void printBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
   /*
   * Prints the current board state as a grid of M x N 0s.
   */
@@ -88,4 +62,82 @@ void printBoard(int board[M][N], int M, int N) {
       }
       std::cout << std::endl;
     }
+}
+
+void gameLoop(int board[MAX_SIZE][MAX_SIZE], int players, int M, int N) {
+  std::string line;
+  int p = 1;
+  while (true) {
+    std::cout << "Player " << p << " (" << SYMBOLS[p - 1] << ") place:";
+    if (!std::getline(std::cin, line)) {
+      std::cout << std::endl << "No more input. Game aborted." << std::endl;
+      return;
+    }
+
+    std::istringstream input(line);
+    int m, n;
+    std::string extra;
+    if (!(input >> m >> n) || (input >> extra)) {
+      std::cout << "Invalid input! Enter a row and a column, e.g. 2 3." << std::endl;
+      continue;
+    }
+    if (m < 1 || m > M || n < 1 || n > N) {
+      std::cout << "Illegal move! Row must be between 1 and " << M
+                << ", column between 1 and " << N << "." << std::endl;
+      continue;
+    }
+    if (board[m - 1][n - 1] != 0) {
+      std::cout << "Illegal move! Cell (" << m << ", " << n << ") is already taken." << std::endl;
+      continue;
+    }
+
+    board[m - 1][n - 1] = p;
+    std::cout << SYMBOLS[p - 1] << " at (" << m << ", " << n << ")." << std::endl;
+    printBoard(board, M, N);
+
+    int winner = parseBoard(board, M, N);
+    if (winner != 0) {
+      std::cout << "Player " << winner << " (" << SYMBOLS[winner - 1] << ") has won!" << std::endl;
+      return;
+    }
+    if (isBoardFull(board, M, N)) {
+      std::cout << "The board is full. It's a draw!" << std::endl;
+      return;
+    }
+
+    p = p % players + 1;
+  }
+}
+
+int readPlayerCount() {
+  std::string line;
+  while (true) {
+    std::cout << "Initialising game... How many players (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")?";
+    if (!std::getline(std::cin, line)) {
+      std::cout << std::endl;
+      return 0;
+    }
+    std::istringstream input(line);
+    int P;
+    std::string extra;
+    if ((input >> P) && !(input >> extra) && P >= MIN_PLAYERS && P <= MAX_PLAYERS) {
+      return P;
+    }
+    std::cout << "Invalid number of players! Enter a number between " << MIN_PLAYERS
+              << " and " << MAX_PLAYERS << "." << std::endl;
+  }
+}
+
+int main() {
+  int P = readPlayerCount();
+  if (P == 0) {
+    return EXIT_FAILURE;
+  }
+  int M = P + 1;
+  int N = P + 1;
+  int board[MAX_SIZE][MAX_SIZE];
+  initBoard(board, M, N);
+  printBoard(board, M, N);
+  gameLoop(board, P, M, N);
+  return EXIT_SUCCESS;
 }
