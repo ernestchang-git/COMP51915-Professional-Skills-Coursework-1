@@ -73,6 +73,19 @@ int main(int argc, char *argv[]) {
   }
   int board[M][N];
   initBoard(board, M, N);
+  printBoard(board, M, N);
   gameLoop(board, cont, P, M, N);
   return EXIT_SUCCESS;
+}
+
+void printBoard(int board[M][N], int M, int N) {
+  /*
+  * Prints the current board state as a grid of M x N 0s.
+  */
+    for (int m = 0; m < M; m++){
+      for (int n = 0; n < N; n++){
+        std::cout << board[m][n] << " ";        
+      }
+      std::cout << std::endl;
+    }
 }
