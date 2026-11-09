@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -18,8 +19,10 @@ void initBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
 
 int parseBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
   /*
-   * Win condition: the first player to get 3 in a row, column or diagonal wins.
-   * If player p in [1,...,P] has won, then you should return p; otherwise 0.
+   * Returns the player p in [1,...,P] who has 3 of their symbols in a row,
+   * column or diagonal, or 0 if nobody has.
+   * The board is checked after every single move, so at most one player can
+   * ever have a line of 3 here: whoever completed it first is the winner.
    */
   // Directions to check: row, column, diagonal down-right, diagonal down-left.
   const int dm[4] = {0, 1, 1, 1};
@@ -54,24 +57,38 @@ bool isBoardFull(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
 
 void printBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N) {
   /*
-  * Prints the current board state as a grid of M x N 0s.
-  */
-    for (int m = 0; m < M; m++){
-      for (int n = 0; n < N; n++){
-        std::cout << board[m][n] << " ";        
-      }
-      std::cout << std::endl;
+   * Prints the current board state as an M x N grid with row and column
+   * numbers (starting from 1). Each cell shows the symbol of the player who
+   * owns it, or '.' if it is empty.
+   */
+  std::cout << "  ";
+  for (int n = 0; n < N; n++) {
+    std::cout << " " << std::setw(2) << n + 1;
+  }
+  std::cout << std::endl;
+
+  for (int m = 0; m < M; m++) {
+    std::cout << std::setw(2) << m + 1;
+    for (int n = 0; n < N; n++) {
+      char cell = (board[m][n] == 0) ? '.' : SYMBOLS[board[m][n] - 1];
+      std::cout << " " << std::setw(2) << cell;
     }
+    std::cout << std::endl;
+  }
 }
 
-void gameLoop(int board[MAX_SIZE][MAX_SIZE], int players, int M, int N) {
+bool gameLoop(int board[MAX_SIZE][MAX_SIZE], int players, int M, int N) {
+  /*
+   * Runs the game until someone wins or the board is full (returns true),
+   * or until input runs out mid-game (returns false).
+   */
   std::string line;
   int p = 1;
   while (true) {
-    std::cout << "Player " << p << " (" << SYMBOLS[p - 1] << ") place:";
+    std::cout << "Player " << p << " (" << SYMBOLS[p - 1] << "), enter row and column: ";
     if (!std::getline(std::cin, line)) {
       std::cout << std::endl << "No more input. Game aborted." << std::endl;
-      return;
+      return false;
     }
 
     std::istringstream input(line);
@@ -98,11 +115,11 @@ void gameLoop(int board[MAX_SIZE][MAX_SIZE], int players, int M, int N) {
     int winner = parseBoard(board, M, N);
     if (winner != 0) {
       std::cout << "Player " << winner << " (" << SYMBOLS[winner - 1] << ") has won!" << std::endl;
-      return;
+      return true;
     }
     if (isBoardFull(board, M, N)) {
       std::cout << "The board is full. It's a draw!" << std::endl;
-      return;
+      return true;
     }
 
     p = p % players + 1;
@@ -112,9 +129,9 @@ void gameLoop(int board[MAX_SIZE][MAX_SIZE], int players, int M, int N) {
 int readPlayerCount() {
   std::string line;
   while (true) {
-    std::cout << "Initialising game... How many players (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")?";
+    std::cout << "Initialising game... How many players (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")? ";
     if (!std::getline(std::cin, line)) {
-      std::cout << std::endl;
+      std::cout << std::endl << "No more input. Game aborted." << std::endl;
       return 0;
     }
     std::istringstream input(line);
@@ -138,6 +155,8 @@ int main() {
   int board[MAX_SIZE][MAX_SIZE];
   initBoard(board, M, N);
   printBoard(board, M, N);
-  gameLoop(board, P, M, N);
+  if (!gameLoop(board, P, M, N)) {
+    return EXIT_FAILURE;
+  }
   return EXIT_SUCCESS;
 }
