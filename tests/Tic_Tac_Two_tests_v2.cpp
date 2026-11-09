@@ -1,16 +1,4 @@
-// Test draft based on the team's Tic-Tac-Two README.
-// This file assumes a Game.hpp interface with:
-//   Game(int players)                 valid player counts: 3 through 10
-//   int board_size() const            returns players + 1
-//   int current_player() const        player numbers: 1 through players
-//   bool place(int row, int column)   one-based coordinates; false for invalid moves
-//   int cell(int row, int column)     0 if empty, otherwise player number
-//   GameStatus status() const         InProgress, Won, or Draw
-//   int winner() const                0 unless someone has won
-// Adapt these calls to the real game API before adding this file to the team repo.
-
 #include "Game.hpp"
-
 #include <exception>
 #include <initializer_list>
 #include <iostream>
