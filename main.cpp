@@ -15,28 +15,11 @@ void initBoard(int board[M][N], int M, int N) {
 
 int parseBoard(int board[M][N]) {
   /*
-   * Win condition: the first player to get 3 in a row, column or diagonal wins.
+   * This function is where you should define your win conditions.
    * If player p in [1,...,P] has won, then you should return p; otherwise 0.
+   * If you find yourself with a great deal of spare time you might try
+   * rendering the board to the terminal here, too.
    */
-  // Directions to check: row, column, diagonal down-right, diagonal down-left.
-  const int dm[4] = {0, 1, 1, 1};
-  const int dn[4] = {1, 0, 1, -1};
-
-  for (int m = 0; m < M; m++) {
-    for (int n = 0; n < N; n++) {
-      int p = board[m][n];
-      if (p == 0) continue;
-
-      for (int d = 0; d < 4; d++) {
-        int m2 = m + dm[d], n2 = n + dn[d];
-        int m3 = m + 2 * dm[d], n3 = n + 2 * dn[d];
-        if (m3 >= 0 && m3 < M && n3 >= 0 && n3 < N &&
-            board[m2][n2] == p && board[m3][n3] == p) {
-          return p;
-        }
-      }
-    }
-  }
   return 0;
 }
 
@@ -62,7 +45,7 @@ void gameLoop(int board[M][N], bool cont, int players, int M, int N) {
   } while (cont);
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
   int P;
   bool cont = true;
   if (argc < 1) {
