@@ -194,6 +194,22 @@ static MunitResult test_full_board_draw(const MunitParameter params[],
   return MUNIT_OK;
 }
 
+static MunitResult test_complete_program(const MunitParameter params[],
+                                         void* user_data) {
+  (void)params;
+  (void)user_data;
+  int result;
+  std::string printed;
+  {
+    IOCapture io("3\n1 1\n2 1\n3 1\n1 2\n2 2\n3 2\n1 3\nn\n");
+    result = runGame();
+    printed = io.output.str();
+  }
+  munit_assert_int(result, ==, EXIT_SUCCESS);
+  munit_assert_true(contains(printed, "Player 1 (X) has won!"));
+  return MUNIT_OK;
+}
+
 static MunitTest tests[] = {
     {"/player-count-and-symbols", test_player_count_and_symbols, NULL, NULL,
      MUNIT_TEST_OPTION_NONE, NULL},
@@ -205,6 +221,8 @@ static MunitTest tests[] = {
     {"/invalid-moves-and-immediate-win", test_invalid_moves_and_immediate_win,
      NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
     {"/full-board-draw", test_full_board_draw, NULL, NULL,
+     MUNIT_TEST_OPTION_NONE, NULL},
+    {"/complete-program", test_complete_program, NULL, NULL,
      MUNIT_TEST_OPTION_NONE, NULL},
     {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
 };
