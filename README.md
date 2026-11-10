@@ -81,3 +81,7 @@ from (1, 1) to (3, 3) and wins:
 ## Testing Instructions:
 
 [to fill this part when we actually do the testing part]
+
+## AI Chat Transcript:
+The following is a link to an example AI chat log used for the development of this game.
+https://copilot.cloud.microsoft/chat/share/eyJzaGFyZUlkIjoiMDE1ZTU3Y2YtNjJhMS00Yzc4LTg2YzItMTg0NzYyOTY4ODgzIiwiY29udmVyc2F0aW9uSWQiOiI4MzgyNGU2My03YWZiLTRiMTktYjRmYS02MTMyMDY2NTNhMmQifQ%3D%3D
