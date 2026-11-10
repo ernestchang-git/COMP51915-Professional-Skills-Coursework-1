@@ -42,7 +42,7 @@ static MunitResult test_player_count_and_symbols(const MunitParameter params[],
   munit_assert_int(MIN_PLAYERS, ==, 3);
   munit_assert_int(MAX_PLAYERS, ==, 10);
   munit_assert_string_equal(std::string(SYMBOLS, MAX_PLAYERS).c_str(),
-                            "XO*#@+%&$!");
+                            "XO*#@+%&$~");
 
   int accepted_count;
   std::string message;
@@ -205,7 +205,8 @@ static MunitTest tests[] = {
     {"/invalid-moves-and-immediate-win", test_invalid_moves_and_immediate_win,
      NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
     {"/full-board-draw", test_full_board_draw, NULL, NULL,
-     MUNIT_TEST_OPTION_NONE, NULL}
+     MUNIT_TEST_OPTION_NONE, NULL},
+    {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
 };
 
 static const MunitSuite suite = {
