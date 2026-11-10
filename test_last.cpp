@@ -212,7 +212,5 @@ static const MunitSuite suite = {
     "/tic-tac-two", tests, NULL, 1, MUNIT_SUITE_OPTION_NONE};
 
 int main(int argc, char* argv[]) {
-  std::vector<const char*> arguments;
-  for (int i = 0; i < argc; ++i) arguments.push_back(argv[i]);
   return munit_suite_main(&suite, NULL, argc, arguments.data());
 }
