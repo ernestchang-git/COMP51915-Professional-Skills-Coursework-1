@@ -33,7 +33,7 @@ Each player has their own symbol. Symbols are assigned in the following order:
 
 | Player | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |--------|---|---|---|---|---|---|---|---|---|----|
-| Symbol | `X` | `O` | `*` | `#` | `@` | `+` | `%` | `&` | `$` | `!` |
+| Symbol | `X` | `O` | `*` | `#` | `@` | `+` | `%` | `&` | `$` | `~` |
 
 ## How to Play:
 
@@ -47,6 +47,8 @@ Each player has their own symbol. Symbols are assigned in the following order:
 4. The board, with row and column numbers, is **printed after every move**.
 5. If the chosen cell is already taken, lies outside the board,
    or the input is not two numbers, **the move is rejected** and the same player is asked to try again.
+6. After each game, a **scoreboard** with the number of wins of every player is shown,
+   and the game asks `Play again? (y/n)`.
 
 ## Win Conditions:
 
@@ -61,7 +63,7 @@ Each player has their own symbol. Symbols are assigned in the following order:
 *Notes on getting a draw:* if every cell of the board is filled and nobody has three in a row, the game ends in a draw. Of course there are other instances of getting a draw in the game of tic-tac-toe, however for the purposes of this course we did not find it necessary to implement those cases, since it would take a lot of time.
 
 ### Example
-Let's say we havea 3-player game, the board would be a 4 × 4 grid. Player 1 (`X`) has just completed a diagonal
+Let's say we have a 3-player game, the board would be a 4 × 4 grid. Player 1 (`X`) has just completed a diagonal
 from (1, 1) to (3, 3) and wins:
 
 ```
@@ -76,12 +78,37 @@ from (1, 1) to (3, 3) and wins:
 
 ## Build Instructions:
 
-[to fill this part when we actually do the build part]
+Requirements: a C++17 compiler (g++ or clang++), a C compiler and `make`.
+- macOS: install the Xcode Command Line Tools with `xcode-select --install`
+- Ubuntu/Debian: `sudo apt install build-essential`
+
+To build and run the game, from the repository folder:
+```
+make
+./tictactwo
+```
+To remove all build files:
+```
+make clean
+```
 
 ## Testing Instructions:
 
-[to fill this part when we actually do the testing part]
+The tests use the [munit](https://nemequ.github.io/munit) testing framework
+that was suggested to us in this course. All tests are in `test_last.cpp`.
 
-## AI Chat Transcript:
+To build and run the tests:
+```
+make test
+```
+The tests check the player limits and symbols, board initialisation and printing,
+all winning lines,
+the full-board check, rejection of invalid moves, a draw on a full board, and a complete game from start to finish.
+
+### Continuous Integration
+Every push and pull request to `main` triggers a GitHub Actions workflow
+(`.github/workflows/c-cpp.yml`) that builds the game with `make` and runs the tests with `make test`. This was configured automatically using GitHub CI tools.
+
+## AI Usage:
 The following is a link to an example AI chat log used for the development of this game.
 https://copilot.cloud.microsoft/chat/share/eyJzaGFyZUlkIjoiMDE1ZTU3Y2YtNjJhMS00Yzc4LTg2YzItMTg0NzYyOTY4ODgzIiwiY29udmVyc2F0aW9uSWQiOiI4MzgyNGU2My03YWZiLTRiMTktYjRmYS02MTMyMDY2NTNhMmQifQ%3D%3D
