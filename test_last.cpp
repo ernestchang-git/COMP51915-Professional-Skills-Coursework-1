@@ -7,6 +7,9 @@
 #include <utility>
 #include <vector>
 
+#include "munit.h"
+#include "game.h"
+
 using Move = std::pair<int, int>;  // one-based row and column
 
 struct IOCapture {
