@@ -1,7 +1,7 @@
 CXX      = g++
 CC       = cc
 CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
-CFLAGS   = -O2
+CFLAGS   = -std=c11 -O2
 
 MUNIT_DIR = .
 
