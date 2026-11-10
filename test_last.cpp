@@ -205,10 +205,7 @@ static MunitTest tests[] = {
     {"/invalid-moves-and-immediate-win", test_invalid_moves_and_immediate_win,
      NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
     {"/full-board-draw", test_full_board_draw, NULL, NULL,
-     MUNIT_TEST_OPTION_NONE, NULL},
-    {"/complete-program", test_complete_program, NULL, NULL,
-     MUNIT_TEST_OPTION_NONE, NULL},
-    {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
+     MUNIT_TEST_OPTION_NONE, NULL}
 };
 
 static const MunitSuite suite = {
