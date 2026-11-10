@@ -110,5 +110,24 @@ Every push and pull request to `main` triggers a GitHub Actions workflow
 (`.github/workflows/c-cpp.yml`) that builds the game with `make` and runs the tests with `make test`. This was configured automatically using GitHub CI tools.
 
 ## AI Usage:
-The following is a link to an example AI chat log used for the development of this game.
-https://copilot.cloud.microsoft/chat/share/eyJzaGFyZUlkIjoiMDE1ZTU3Y2YtNjJhMS00Yzc4LTg2YzItMTg0NzYyOTY4ODgzIiwiY29udmVyc2F0aW9uSWQiOiI4MzgyNGU2My03YWZiLTRiMTktYjRmYS02MTMyMDY2NTNhMmQifQ%3D%3D
+The file `COMP51915-Professional-Skills-Coursework-1-AI-Chat-Transcript.pdf` is an example AI chat log used for the development of this game.
+
+Apart from using Copilot, we used Google AI Overview as a form of search engine for single-use questions such as (since there's no saved history):
+
+- A teammate pushed several commits to his branches, but we only want 2 of them in main. How can we take specific commits without merging the whole branch? *- this was one of the biggest challenges we faced during the project*
+
+- How do we close a pull request without merging it? Is it safe to delete the old branches?
+
+- I committed directly to main. How do I move that commit to a new branch?
+
+- git status says my branch is ahead 1, behind 1. How do I fix it without losing my work?
+
+- How can I read 2 integers from user input and reject letters and any extra symbols?
+
+- How do you pass an array to a function in c++?
+
+- Why does munit test runner crash with a segmentation fault after we removed one test?
+
+- What's .PHONY in makefile?
+
+- Why does munit.c compile on my Mac but fail on GitHub with implicit declaration of function ATOMIC_VAR_INIT?
