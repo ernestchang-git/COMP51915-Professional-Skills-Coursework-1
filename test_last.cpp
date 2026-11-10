@@ -212,5 +212,5 @@ static const MunitSuite suite = {
     "/tic-tac-two", tests, NULL, 1, MUNIT_SUITE_OPTION_NONE};
 
 int main(int argc, char* argv[]) {
-  return munit_suite_main(&suite, NULL, argc, arguments.data());
+  return munit_suite_main(&suite, NULL, argc, argv);
 }
