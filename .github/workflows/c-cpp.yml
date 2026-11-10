@@ -14,19 +14,9 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v4
-    
-    - name: Compile MUnit
-      run: gcc -std=c11 -c munit.c 
-      
-    - name: Compile game tests
-      run: |
-          g++ -std=c++17 \
-              -Wall \
-              -Wextra \
-              -pedantic \
-              test_last.cpp \
-              game.cpp \
-              munit.o \
-              -o game_tests
-    - name: Run tests
-      run: ./game_tests
+
+    - name: Build game
+      run: make
+
+    - name: Build and run tests
+      run: make test
