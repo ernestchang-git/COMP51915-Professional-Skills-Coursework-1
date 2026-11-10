@@ -4,7 +4,7 @@
 const int MIN_PLAYERS = 3;
 const int MAX_PLAYERS = 10;
 const int MAX_SIZE = MAX_PLAYERS + 1;
-const char SYMBOLS[MAX_PLAYERS] = {'X', 'O', '*', '#', '@', '+', '%', '&', '$', '!'};
+const char SYMBOLS[MAX_PLAYERS] = {'X', 'O', '*', '#', '@', '+', '%', '&', '$', '~'};
 
 void initBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N);
 int parseBoard(int board[MAX_SIZE][MAX_SIZE], int M, int N);
